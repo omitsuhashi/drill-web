@@ -1,41 +1,21 @@
 'use client';
 
 import * as d3 from "d3";
-import {useEffect, useRef} from "react";
+import {PropsWithoutRef, useEffect, useRef} from "react";
 
-type MindMapData = {
+export type MindMapData = {
   name: string;
   children?: Array<MindMapData>;
 }
 
-export default function MindMap() {
+type Props = {
+  data: MindMapData;
+}
+
+export default function MindMap({data}: PropsWithoutRef<Props>) {
   const svgRef = useRef<SVGSVGElement | null>(null);
 
   useEffect(() => {
-    const data: MindMapData = {
-      name: "Root",
-      children: [
-        {
-          name: "Child 1",
-          children: [
-            { name: "Grandchild 1" },
-            { name: "Grandchild 2" }
-          ]
-        },
-        { name: "Child 2" },
-        {
-          name: "Child 3",
-          children: [
-            { name: "Grandchild 1", children: [
-                { name: "Grandchild 1" },
-                { name: "Grandchild 2" }
-              ] },
-            { name: "Grandchild 2" }
-          ]
-        },
-      ]
-    };
-
     const width = 800;
     const height = 600;
 
