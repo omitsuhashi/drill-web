@@ -14,10 +14,6 @@ export default function useMindMap({data }: Props) {
   const svgRef = useRef<SVGSVGElement | null>(null);
 
   function drawMindMap() {
-
-  }
-
-  useEffect(() => {
     const width = 800;
     const height = 600;
 
@@ -63,6 +59,34 @@ export default function useMindMap({data }: Props) {
         .attr("font", "12px sans-serif")
         .style('fill', 'red');
 
+    // Add hover or click event to generate the + button
+    node.on('click', function(event, d) {
+      d3.selectAll(".button").remove();
+
+      d3.select<SVGElement, d3.HierarchyNode<MindMapData>>(this).append("circle")
+          .attr("class", "button")
+          .attr("cx", 20)
+          .attr("cy", 0)
+          .attr("r", 5)
+          .attr("fill", "lightgreen")
+          .attr("stroke", "darkgreen")
+          .attr("stroke-width", 2)
+          .on('click', function(event, d) {
+            event.stopPropagation(); // To prevent triggering parent click event
+
+            const newNode: MindMapData = { name: `New Node ${Math.random().toFixed(2)}` };
+            if (!d.data.children) {
+              d.data.children = [];
+            }
+            d.data.children.push(newNode);
+            d3.select(svgRef.current).selectAll("*").remove(); // Clear the SVG
+            drawMindMap(); // Redraw the mind map
+          });
+    });
+  }
+
+  useEffect(() => {
+    drawMindMap();
   }, [data]);
 
   return {
