@@ -77,11 +77,10 @@ export default function useMindMap({data }: Props) {
         .attr("font", "12px sans-serif")
         .style('fill', 'red');
 
-    // Add hover or click event to generate the + button
-    node.on('click', function() {
+    function handleAddNode(el: SVGElement) {
       d3.selectAll(".button").remove();
 
-      d3.select<SVGElement, d3.HierarchyNode<MindMapData>>(this).append("circle")
+      d3.select<SVGElement, d3.HierarchyNode<MindMapData>>(el).append("circle")
           .attr("class", "button")
           .attr("cx", 20)
           .attr("cy", 0)
@@ -100,6 +99,11 @@ export default function useMindMap({data }: Props) {
             d3.select(svgRef.current).selectAll("*").remove(); // Clear the SVG
             drawMindMap(); // Redraw the mind map
           });
+    }
+
+    // Add hover or click event to generate the + button
+    node.on('click', function() {
+      handleAddNode(this);
     });
   }
 
