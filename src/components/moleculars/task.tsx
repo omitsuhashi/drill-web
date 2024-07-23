@@ -1,6 +1,6 @@
 "use client";
 
-import useTask, { TaskData } from "@/hooks/taskData";
+import useTask, { TaskData } from "@/hooks/task";
 import { PropsWithoutRef, useState } from "react";
 
 type Props = {};
