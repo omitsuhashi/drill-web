@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { ID } from "@/types";
+import { MindMapData } from "@/hooks/mind-map";
 
 export type TaskData = {
   id: ID;
@@ -8,7 +9,7 @@ export type TaskData = {
   children?: TaskData[];
 };
 
-export default function useTask() {
+export function useTasks() {
   const [tasks, setTasks] = useState<TaskData[]>([]);
 
   const addTask = (newTask: TaskData) => {
@@ -52,5 +53,30 @@ export default function useTask() {
     deleteTask,
     getTaskById,
     getChildrenTasks,
+  };
+}
+
+export default function useTask(taskData: TaskData) {
+  const [task, setTask] = useState<TaskData>(taskData);
+
+  const addChildTask = () => (childTask: TaskData) => {
+    if (task.children === undefined) {
+      task.children = [childTask];
+    } else {
+      task.children.push(childTask);
+    }
+    setTask(task);
+  };
+
+  return {
+    task,
+    addChildTask,
+  };
+}
+
+export function toMindMap(taskData: TaskData): MindMapData {
+  return {
+    name: taskData.name,
+    children: taskData.children?.map((child) => toMindMap(child)),
   };
 }
