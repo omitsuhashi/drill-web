@@ -84,13 +84,35 @@ export default function useMindMap({ data }: Props) {
       .attr("stroke", "steelblue")
       .attr("stroke-width", 3);
 
-    node
-      .append("text")
-      .attr("dy", "-1em")
-      .attr("text-anchor", "middle")
-      .text((d) => d.data.name as string)
-      .attr("font", "12px sans-serif")
-      .style("fill", "red");
+    const foreignObject = node
+      .append("foreignObject")
+      .attr("x", (d) => -((d.data.name.length * 0.6) / 2) + "em")
+      .attr("y", "-2em")
+      .attr("width", (d) => d.data.name.length * 0.6 + "em")
+      .attr("height", "2em");
+
+    foreignObject
+      .append<HTMLDivElement>("xhtml:div")
+      .attr("contenteditable", true)
+      .style("display", "flex")
+      .style("align-items", "center")
+      .style("justify-content", "center")
+      .text((d) => d.data.name)
+      .on("input", function (event, d) {
+        const newText = d3.select(this).text();
+        d.data.name = newText;
+        if (this.parentNode != null) {
+          d3.select(this.parentNode.nodeName)
+            .attr("width", newText.length * 0.6 + "em")
+            .attr("x", -((newText.length * 0.6) / 2) + "em");
+        }
+      });
+
+    // 初期設定のための中央揃えスタイルを適用
+    d3.selectAll("foreignObject xhtml\\:div")
+      .style("text-align", "center")
+      .style("font", "12px sans-serif")
+      .style("color", "red");
 
     function handleAddNode(el: SVGElement) {
       d3.selectAll(".button").remove();
