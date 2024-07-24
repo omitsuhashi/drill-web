@@ -2,22 +2,25 @@ import { useState } from "react";
 import { ID } from "@/types";
 
 export type TaskData = {
-  id: ID;
+  id?: ID;
   name: string;
   parent?: TaskData;
   children?: TaskData[];
 };
 
 export default function useTask(taskData: TaskData) {
+  const [id, setId] = useState(1);
   const [task, setTask] = useState<TaskData>(taskData);
 
-  const addChildTask = (childTask: TaskData) => {
-    if (task.children === undefined) {
-      task.children = [childTask];
+  const addChildTask = (parentTask: TaskData) => (childTask: TaskData) => {
+    childTask.id = id;
+    setId((prev) => prev + 1);
+    if (parentTask.children === undefined) {
+      parentTask.children = [childTask];
     } else {
-      task.children.push(childTask);
+      parentTask.children.push(childTask);
     }
-    setTask({ ...task });
+    updateTask(parentTask);
   };
 
   const updateTask = (newTask: TaskData) => {

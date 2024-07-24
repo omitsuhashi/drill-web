@@ -6,12 +6,15 @@ export type MindMapData = {} & TaskData;
 
 type Props = {
   data: MindMapData;
+  addChildTask: (parent: TaskData) => (task: TaskData) => void;
+  updateTask: (task: TaskData) => void;
 };
 
-export default function useMindMap({ data }: Props) {
+export default function useMindMap({ data, updateTask, addChildTask }: Props) {
   const svgRef = useRef<SVGSVGElement | null>(null);
 
   const drawMindMap = useCallback(() => {
+    d3.select(svgRef.current).selectAll("*").remove();
     const margin = { top: 20, right: 120, bottom: 20, left: 120 };
     let width = 800;
     let height = 600;
@@ -96,10 +99,11 @@ export default function useMindMap({ data }: Props) {
       .style("align-items", "center")
       .style("justify-content", "center")
       .text((d) => d.data.name)
-      .on("input", function (_, d) {
+      .on("blur", function (_, d) {
         const newText = d3.select(this).text();
         d.data.name = newText;
         if (this.parentNode != null) {
+          updateTask(d.data);
           d3.select(this.parentNode.nodeName)
             .attr("width", newText.length * 0.6 + "em")
             .attr("x", -((newText.length * 0.6) / 2) + "em");
@@ -128,15 +132,13 @@ export default function useMindMap({ data }: Props) {
           event.stopPropagation(); // To prevent triggering parent click event
 
           const newNode: MindMapData = {
-            id: 1,
             name: `New Node ${Math.random().toFixed(2)}`,
           };
+
           if (!d.data.children) {
             d.data.children = [];
           }
-          d.data.children.push(newNode);
-          d3.select(svgRef.current).selectAll("*").remove(); // Clear the SVG
-          drawMindMap(); // Redraw the mind map
+          addChildTask(d.data)(newNode);
         });
     }
 
@@ -144,13 +146,14 @@ export default function useMindMap({ data }: Props) {
     node.on("click", function () {
       handleAddNode(this);
     });
-  }, [data]);
+  }, [addChildTask, data, updateTask]);
 
   useEffect(() => {
     drawMindMap();
-  }, [data, drawMindMap]);
+  }, [drawMindMap]);
 
   return {
     svgRef,
+    drawMindMap,
   };
 }
