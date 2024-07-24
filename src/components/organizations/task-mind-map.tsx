@@ -1,7 +1,7 @@
 "use client";
 
 import useMindMap from "@/hooks/mind-map";
-import useTask, { TaskData, toMindMap } from "@/hooks/task";
+import useTask, { TaskData } from "@/hooks/task";
 import { PropsWithoutRef } from "react";
 import Task from "@/components/moleculars/task";
 
@@ -15,7 +15,7 @@ type Props = {
 // 将来的には"project"などをルートとする
 export default function TaskMindMap({ data }: PropsWithoutRef<Props>) {
   const { task, addChildTask } = useTask(data);
-  const { svgRef } = useMindMap({ data: toMindMap(task) });
+  const { svgRef } = useMindMap({ data: task });
 
   return (
     <>

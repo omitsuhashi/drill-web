@@ -1,10 +1,8 @@
 import { useCallback, useEffect, useRef } from "react";
 import * as d3 from "d3";
+import { TaskData } from "@/hooks/task";
 
-export type MindMapData = {
-  name: string;
-  children?: Array<MindMapData>;
-};
+export type MindMapData = {} & TaskData;
 
 type Props = {
   data: MindMapData;
@@ -98,7 +96,7 @@ export default function useMindMap({ data }: Props) {
       .style("align-items", "center")
       .style("justify-content", "center")
       .text((d) => d.data.name)
-      .on("input", function (event, d) {
+      .on("input", function (_, d) {
         const newText = d3.select(this).text();
         d.data.name = newText;
         if (this.parentNode != null) {
@@ -130,6 +128,7 @@ export default function useMindMap({ data }: Props) {
           event.stopPropagation(); // To prevent triggering parent click event
 
           const newNode: MindMapData = {
+            id: 1,
             name: `New Node ${Math.random().toFixed(2)}`,
           };
           if (!d.data.children) {

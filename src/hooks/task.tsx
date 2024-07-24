@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { ID } from "@/types";
-import { MindMapData } from "@/hooks/mind-map";
 
 export type TaskData = {
   id: ID;
@@ -71,12 +70,5 @@ export default function useTask(taskData: TaskData) {
   return {
     task,
     addChildTask,
-  };
-}
-
-export function toMindMap(taskData: TaskData): MindMapData {
-  return {
-    name: taskData.name,
-    children: taskData.children?.map((child) => toMindMap(child)),
   };
 }
