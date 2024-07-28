@@ -4,7 +4,7 @@ import { IconButton } from "@mui/material";
 
 type Props = {
   onClick: () => void;
-  done: boolean;
+  done?: boolean;
 };
 
 export function TaskCheck({ done, onClick }: PropsWithoutRef<Props>) {

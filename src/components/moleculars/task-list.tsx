@@ -1,33 +1,18 @@
 import { TaskData } from "@/hooks/task";
-import { PropsWithoutRef, useState } from "react";
+import { PropsWithoutRef } from "react";
+import Task from "@/components/moleculars/task";
 
 type Props = {
-  data: TaskData;
-  addChildTask: (p: TaskData) => (n: TaskData) => void;
+  tasks: TaskData[];
 };
 
-export default function TaskList({
-  data,
-  addChildTask,
-}: PropsWithoutRef<Props>) {
-  const [id, setId] = useState<number>(0);
-
-  const onCLickAddChild = (t: TaskData) => () => {
-    addChildTask(t)({ id: id, name: `child ${id}`, status: false });
-    setId((prev) => prev + 1);
-  };
-
+export default function TaskList({ tasks }: PropsWithoutRef<Props>) {
   return (
     <>
-      <p>tasks:</p>
-      <div key={data.id}>
-        <p>{data.name}</p>
-        <p>children:</p>
-        <div>
-          {data.children?.map((child) => <p key={child.id}>{child.name}</p>)}
-        </div>
-        <button onClick={onCLickAddChild(data)}>add child task</button>
-      </div>
+      {tasks.map((task) => (
+        <Task key={task.id} task={task} />
+      ))}
+      <Task isCreate />
     </>
   );
 }
