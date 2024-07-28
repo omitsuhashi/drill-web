@@ -1,6 +1,7 @@
 import Image from "next/image";
 import styles from "./page.module.css";
 import TaskMindMap from "@/components/organizations/task-mind-map";
+import Task from "@/components/atoms/task";
 
 export default function Home() {
   return (
@@ -91,7 +92,7 @@ export default function Home() {
           </p>
         </a>
       </div>
-      <TaskMindMap data={{ id: 0, name: "root" }} />
+      <Task />
     </main>
   );
 }

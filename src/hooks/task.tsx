@@ -4,6 +4,7 @@ import { ID } from "@/types";
 export type TaskData = {
   id?: ID;
   name: string;
+  status: boolean;
   parent?: TaskData;
   children?: TaskData[];
 };
