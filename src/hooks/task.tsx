@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { ID } from "@/types";
 
+type Priority = "important";
+
 export type TaskData = {
   id?: ID;
   name: string;
   status: boolean;
+  priority?: Priority;
   parent?: TaskData;
   children?: TaskData[];
 };

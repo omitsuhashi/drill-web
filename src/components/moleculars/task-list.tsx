@@ -13,7 +13,7 @@ export default function TaskList({
   const [id, setId] = useState<number>(0);
 
   const onCLickAddChild = (t: TaskData) => () => {
-    addChildTask(t)({ id: id, name: `child ${id}` });
+    addChildTask(t)({ id: id, name: `child ${id}`, status: false });
     setId((prev) => prev + 1);
   };
 
