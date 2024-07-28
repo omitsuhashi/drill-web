@@ -19,7 +19,6 @@ export default function Task({ task }: PropsWithoutRef<Props>) {
           <TaskCheck done={task?.status ?? false} onClick={() => {}} />
           {/* 入力フォーム */}
           <TextField placeholder="タスク名" variant="standard" />
-          {/* タグ */}
           {/* フラグ */}
           <TaskFlag />
           {/* 作業見積もり */}
