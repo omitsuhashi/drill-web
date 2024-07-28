@@ -6,7 +6,10 @@ type Props = {
   addChildTask: (p: TaskData) => (n: TaskData) => void;
 };
 
-export default function Task({ data, addChildTask }: PropsWithoutRef<Props>) {
+export default function TaskList({
+  data,
+  addChildTask,
+}: PropsWithoutRef<Props>) {
   const [id, setId] = useState<number>(0);
 
   const onCLickAddChild = (t: TaskData) => () => {

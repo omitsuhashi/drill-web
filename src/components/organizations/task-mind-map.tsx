@@ -3,7 +3,7 @@
 import useMindMap from "@/hooks/mind-map";
 import useTask, { TaskData } from "@/hooks/task";
 import { PropsWithoutRef, useEffect } from "react";
-import Task from "@/components/moleculars/task";
+import TaskList from "@/components/moleculars/task-list";
 
 type Props = {
   data: TaskData;
@@ -27,7 +27,7 @@ export default function TaskMindMap({ data }: PropsWithoutRef<Props>) {
 
   return (
     <>
-      <Task data={task} addChildTask={addChildTask} />
+      <TaskList data={task} addChildTask={addChildTask} />
       <svg ref={svgRef} />
     </>
   );
