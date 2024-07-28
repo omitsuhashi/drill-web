@@ -1,7 +1,7 @@
 "use client";
 
 import { TaskData } from "@/hooks/task";
-import { Box, Stack, TextField } from "@mui/material";
+import { Box, InputAdornment, Stack, TextField } from "@mui/material";
 import { PropsWithoutRef } from "react";
 import { TaskCheck } from "@/components/atoms/task-check";
 import TaskFlag from "@/components/atoms/task-flag";
@@ -22,6 +22,12 @@ export default function Task({ task }: PropsWithoutRef<Props>) {
           {/* フラグ */}
           <TaskFlag />
           {/* 作業見積もり */}
+          <TextField
+            variant="standard"
+            InputProps={{
+              endAdornment: <InputAdornment position="end">h</InputAdornment>,
+            }}
+          />
         </Stack>
       </Box>
     </>
