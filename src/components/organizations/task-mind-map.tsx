@@ -27,7 +27,6 @@ export default function TaskMindMap({ data }: PropsWithoutRef<Props>) {
 
   return (
     <>
-      <TaskList tasks={task} addChildTask={addChildTask} />
       <svg ref={svgRef} />
     </>
   );

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import styles from "./page.module.css";
 import TaskList from "@/components/moleculars/task-list";
+import TaskMindMap from "@/components/organizations/task-mind-map";
 
 export default function Home() {
   return (
@@ -91,7 +92,7 @@ export default function Home() {
           </p>
         </a>
       </div>
-      <TaskList tasks={[{ id: 1, status: false, name: "test1" }]} />
+      <TaskMindMap data={{ id: 0, name: "root", status: false }} />
     </main>
   );
 }

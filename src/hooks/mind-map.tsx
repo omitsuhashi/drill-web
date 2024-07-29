@@ -133,6 +133,7 @@ export default function useMindMap({ data, updateTask, addChildTask }: Props) {
 
           const newNode: MindMapData = {
             name: `New Node ${Math.random().toFixed(2)}`,
+            status: false,
           };
 
           if (!d.data.children) {

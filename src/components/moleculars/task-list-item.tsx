@@ -1,7 +1,7 @@
 "use client";
 
 import { TaskData } from "@/hooks/task";
-import { Stack, TextField, Typography } from "@mui/material";
+import { Stack, TextField } from "@mui/material";
 import { PropsWithoutRef } from "react";
 import { TaskCheck } from "@/components/atoms/task-check";
 import TaskFlag from "@/components/atoms/task-flag";
